@@ -125,12 +125,12 @@ def demo_image(image_dir, pid, save_dir, preprocess, cfg, input_size, net_stride
     else:
         device = torch.device("cpu")
 
-    detector = FaceBoxesDetector('FaceBoxes', f'{env_paths.CODE_BASE}/src/pixel3dmm/preprocessing/PIPNet/FaceBoxesV2/weights/FaceBoxesV2.pth', use_gpu, device)
+    detector = FaceBoxesDetector('FaceBoxes', f'{env_paths.PACKAGE_ROOT}/preprocessing/PIPNet/FaceBoxesV2/weights/FaceBoxesV2.pth', use_gpu, device)
     # detector = FaceBoxesDetector()
     my_thresh = 0.6
     det_box_scale = 1.2
     meanface_indices, reverse_index1, reverse_index2, max_len = get_meanface(
-        os.path.join(f'{env_paths.CODE_BASE}/src/pixel3dmm/preprocessing/', 'PIPNet', 'data', cfg.data_name, 'meanface.txt'), cfg.num_nb)
+        os.path.join(f'{env_paths.PACKAGE_ROOT}/preprocessing/', 'PIPNet', 'data', cfg.data_name, 'meanface.txt'), cfg.num_nb)
 
     if cfg.backbone == 'resnet18':
         resnet18 = models.resnet18(pretrained=cfg.pretrained)

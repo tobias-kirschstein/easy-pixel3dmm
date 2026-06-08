@@ -34,7 +34,7 @@ def run(exp_path, image_dir, start_frame = 0,
     cfg.experiment_name = experiment_name
     cfg.data_name = data_name
 
-    save_dir = os.path.join(f'{env_paths.CODE_BASE}/src/pixel3dmm/preprocessing/PIPNet/snapshots', cfg.data_name, cfg.experiment_name)
+    save_dir = os.path.join(f'{env_paths.PACKAGE_ROOT}/preprocessing/PIPNet/snapshots', cfg.data_name, cfg.experiment_name)
 
 
 
@@ -98,8 +98,8 @@ def main(video_or_images_path : str,
 
     if os.path.exists(f'{preprocessing_folder}/{video_name}/cropped/'):
         if len(os.listdir(base_path)) == len(os.listdir(f'{preprocessing_folder}/{video_name}/cropped/')):
-            if f'{env_paths.CODE_BASE}/src/pixel3dmm/preprocessing/PIPNet/FaceBoxesV2/' in sys.path:
-                sys.path.remove(f'{env_paths.CODE_BASE}/src/pixel3dmm/preprocessing/PIPNet/FaceBoxesV2/')
+            if f'{env_paths.PACKAGE_ROOT}/preprocessing/PIPNet/FaceBoxesV2/' in sys.path:
+                sys.path.remove(f'{env_paths.PACKAGE_ROOT}/preprocessing/PIPNet/FaceBoxesV2/')
             if 'utils' in sys.modules:
                 del sys.modules['utils']
             return
@@ -109,8 +109,8 @@ def main(video_or_images_path : str,
     run('experiments/WFLW/pip_32_16_60_r18_l2_l1_10_1_nb10.py', base_path, start_frame=start_frame, vertical_crop=False,
         static_crop=True, max_bbox=max_bbox, disable_cropping=disable_cropping)
     # run('experiments/WFLW/pip_32_16_60_r101_l2_l1_10_1_nb10.py', base_path, start_frame=start_frame, vertical_crop=False, static_crop=True)
-    if f'{env_paths.CODE_BASE}/src/pixel3dmm/preprocessing/PIPNet/FaceBoxesV2/' in sys.path:
-        sys.path.remove(f'{env_paths.CODE_BASE}/src/pixel3dmm/preprocessing/PIPNet/FaceBoxesV2/')
+    if f'{env_paths.PACKAGE_ROOT}/preprocessing/PIPNet/FaceBoxesV2/' in sys.path:
+        sys.path.remove(f'{env_paths.PACKAGE_ROOT}/preprocessing/PIPNet/FaceBoxesV2/')
     if 'utils' in sys.modules:
         del sys.modules['utils']
 
