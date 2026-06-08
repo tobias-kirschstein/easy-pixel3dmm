@@ -1,15 +1,13 @@
-import importlib
-import os
+import torch.nn.parallel
 import torch.nn.parallel
 import torch.utils.data
-import torchvision.transforms as transforms
+from visage.modules.FaceBoxesV2.faceboxes_detector import *
+from visage.modules.PIPNet.lib.functions import *
+from visage.modules.PIPNet.lib.mobilenetv3 import mobilenetv3_large
+from visage.modules.PIPNet.lib.networks import *
 
-
-from pixel3dmm.preprocessing.PIPNet.FaceBoxesV2.faceboxes_detector import *
-from pixel3dmm.preprocessing.PIPNet.lib.networks import *
-from pixel3dmm.preprocessing.PIPNet.lib.functions import *
-from pixel3dmm.preprocessing.PIPNet.lib.mobilenetv3 import mobilenetv3_large
 from pixel3dmm import env_paths
+
 
 def smooth(x, window_len=11, window='hanning'):
     """smooth the data using a window with requested size.
@@ -123,7 +121,8 @@ def demo_image(image_dir, pid, save_dir, preprocess, cfg, input_size, net_stride
     else:
         device = torch.device("cpu")
 
-    detector = FaceBoxesDetector('FaceBoxes', f'{env_paths.CODE_BASE}/src/pixel3dmm/preprocessing/PIPNet/FaceBoxesV2/weights/FaceBoxesV2.pth', use_gpu, device)
+    # detector = FaceBoxesDetector('FaceBoxes', f'{env_paths.CODE_BASE}/src/pixel3dmm/preprocessing/PIPNet/FaceBoxesV2/weights/FaceBoxesV2.pth', use_gpu, device)
+    detector = FaceBoxesDetector()
     my_thresh = 0.6
     det_box_scale = 1.2
     meanface_indices, reverse_index1, reverse_index2, max_len = get_meanface(

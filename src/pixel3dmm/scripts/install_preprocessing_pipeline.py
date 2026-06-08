@@ -136,12 +136,12 @@ def install_pipnet(preprocessing_dir):
         run("git clone https://github.com/jhb86253817/PIPNet.git", cwd=preprocessing_dir)
 
     # Build FaceBoxesV2 C extensions (replaces: sh make.sh -> python3 build.py build_ext --inplace)
-    faceboxes_utils = pipnet_dir / "FaceBoxesV2" / "utils"
-    subprocess.run(
-        [sys.executable, "build.py", "build_ext", "--inplace"],
-        cwd=faceboxes_utils,
-        check=True,
-    )
+    # faceboxes_utils = pipnet_dir / "FaceBoxesV2" / "utils"
+    # subprocess.run(
+    #     [sys.executable, "build.py", "build_ext", "--inplace"],
+    #     cwd=faceboxes_utils,
+    #     check=True,
+    # )
 
     # Create snapshot directories and download weights
     snapshot_dir = pipnet_dir / "snapshots" / "WFLW" / "pip_32_16_60_r18_l2_l1_10_1_nb10"

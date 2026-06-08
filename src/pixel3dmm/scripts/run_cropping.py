@@ -11,7 +11,7 @@ from PIL import Image
 
 from pixel3dmm import env_paths
 
-sys.path.append(f'{env_paths.CODE_BASE}/src/pixel3dmm/preprocessing/PIPNet/FaceBoxesV2/')
+# sys.path.append(f'{env_paths.CODE_BASE}/src/pixel3dmm/preprocessing/PIPNet/FaceBoxesV2/')
 from pixel3dmm.preprocessing.pipnet_utils import demo_image
 from pixel3dmm import env_paths
 
