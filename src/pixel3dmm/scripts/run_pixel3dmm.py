@@ -52,7 +52,7 @@ def main(video_path: str, preprocessing_folder: str, tracking_folder: str, /, cl
     main_facer(preprocessing_folder2, 'tracking')
 
     # Run Pixel3DMM UV and normal prediction models
-    base_conf = OmegaConf.load(f'{env_paths.CODE_BASE}/configs/base.yaml')
+    base_conf = OmegaConf.load(f'{env_paths.PACKAGE_ROOT}/configs/base.yaml')
     base_conf.video_name = 'tracking'
     base_conf.model.prediction_type = "normals"
     main_network_inference(preprocessing_folder2, base_conf)
@@ -61,7 +61,7 @@ def main(video_path: str, preprocessing_folder: str, tracking_folder: str, /, cl
     main_network_inference(preprocessing_folder2, base_conf)
 
     # Run FLAME tracking
-    cfg_tracker = OmegaConf.load(f'{env_paths.CODE_BASE}/configs/tracking.yaml')
+    cfg_tracker = OmegaConf.load(f'{env_paths.PACKAGE_ROOT}/configs/tracking.yaml')
     cfg_tracker.video_name = 'tracking'
 
     device_capability = torch.cuda.get_device_capability()

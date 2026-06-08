@@ -1,7 +1,11 @@
+import cv2
 import torch.nn.parallel
 import torch.nn.parallel
 import torch.utils.data
-from visage.modules.FaceBoxesV2.faceboxes_detector import *
+from PIL import Image
+from torchvision import models
+# from visage.modules.FaceBoxesV2.faceboxes_detector import *
+from .face_boxes_detector import FaceBoxesDetector
 from visage.modules.PIPNet.lib.functions import *
 from visage.modules.PIPNet.lib.mobilenetv3 import mobilenetv3_large
 from visage.modules.PIPNet.lib.networks import *
@@ -121,8 +125,8 @@ def demo_image(image_dir, pid, save_dir, preprocess, cfg, input_size, net_stride
     else:
         device = torch.device("cpu")
 
-    # detector = FaceBoxesDetector('FaceBoxes', f'{env_paths.CODE_BASE}/src/pixel3dmm/preprocessing/PIPNet/FaceBoxesV2/weights/FaceBoxesV2.pth', use_gpu, device)
-    detector = FaceBoxesDetector()
+    detector = FaceBoxesDetector('FaceBoxes', f'{env_paths.CODE_BASE}/src/pixel3dmm/preprocessing/PIPNet/FaceBoxesV2/weights/FaceBoxesV2.pth', use_gpu, device)
+    # detector = FaceBoxesDetector()
     my_thresh = 0.6
     det_box_scale = 1.2
     meanface_indices, reverse_index1, reverse_index2, max_len = get_meanface(

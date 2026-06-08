@@ -29,7 +29,7 @@ EYE_MASK = f'{PACKAGE_ROOT}/assets/uv_mask_eyes.png'
 FLAME_UV_COORDS = f'{PACKAGE_ROOT}/assets/flame_uv_coords.npy'
 VALID_VERTS_NARROW = f'{PACKAGE_ROOT}/assets/uv_valid_verty_noEyes.npy'
 VALID_VERTS = f'{PACKAGE_ROOT}/assets/uv_valid_verty_noEyes_noEyeRegion_debug_wEars.npy'
-FLAME_ASSETS = f'{PACKAGE_ROOT}/src/pixel3dmm/preprocessing/MICA/data/'
+FLAME_ASSETS = f'{PACKAGE_ROOT}/preprocessing/MICA/data/'
 
 # paths to pretrained pixel3dmm checkpoints
 CKPT_UV_PRED = f"{Path.home()}/.cache/pixel3dmm/uv.ckpt"
