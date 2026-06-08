@@ -156,7 +156,7 @@ def download_pretrained_weights(repo_root):
     gdown_download("1KYYlpN-KGrYMVcAOT22NkVQC0UAfycMD", str(weights_dir / "normals.ckpt"))
 
 def main():
-    repo_root = REPO_ROOT
+    repo_root = Path(REPO_ROOT)
     preprocessing_dir = repo_root / "src" / "pixel3dmm" / "preprocessing"
 
     print("=== Installing facer ===")
