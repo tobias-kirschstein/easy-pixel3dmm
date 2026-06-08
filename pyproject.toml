@@ -52,4 +52,4 @@ where = ["src"]
 include = ["pixel3dmm*"]  # Keep the '*', otherwise submodules are not found
 
 [tool.setuptools.package-data]
-pixel3dmm = ["assets/**/*", "configs/**/*"]
+pixel3dmm = ["assets/**/*", "configs/**/*", "tracking/flame/blendshapes/*.npy"]
