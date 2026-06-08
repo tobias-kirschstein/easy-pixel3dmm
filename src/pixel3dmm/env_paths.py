@@ -31,5 +31,7 @@ VALID_VERTS = f'{CODE_BASE}/assets/uv_valid_verty_noEyes_noEyeRegion_debug_wEars
 FLAME_ASSETS = f'{CODE_BASE}/src/pixel3dmm/preprocessing/MICA/data/'
 
 # paths to pretrained pixel3dmm checkpoints
-CKPT_UV_PRED = f'{CODE_BASE}/pretrained_weights/uv.ckpt'
-CKPT_N_PRED = f'{CODE_BASE}/pretrained_weights/normals.ckpt'
+CKPT_UV_PRED = f"{Path.home()}/.cache/pixel3dmm/uv.ckpt"
+CKPT_N_PRED = f"{Path.home()}/.cache/pixel3dmm/normals.ckpt"
+# CKPT_UV_PRED = f'{CODE_BASE}/pretrained_weights/uv.ckpt'
+# CKPT_N_PRED = f'{CODE_BASE}/pretrained_weights/normals.ckpt'

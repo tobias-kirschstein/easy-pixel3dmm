@@ -149,15 +149,14 @@ def install_pipnet(preprocessing_dir):
     gdown_download("1nVkaSbxy3NeqblwMTGvLg4nF49cI_99C", str(snapshot_dir / "epoch59.pth"))
 
 
-def download_pretrained_weights(repo_root):
-    weights_dir = repo_root / "pretrained_weights"
+def download_pretrained_weights():
+    weights_dir = Path.home() / ".cache" / "pixel3dmm"
     weights_dir.mkdir(exist_ok=True)
     gdown_download("1SDV_8_qWTe__rX_8e4Fi-BE3aES0YzJY", str(weights_dir / "uv.ckpt"))
     gdown_download("1KYYlpN-KGrYMVcAOT22NkVQC0UAfycMD", str(weights_dir / "normals.ckpt"))
 
 def main():
-    repo_root = Path(REPO_ROOT)
-    preprocessing_dir = repo_root / "src" / "pixel3dmm" / "preprocessing"
+    preprocessing_dir = Path(__file__).parent.parent / "preprocessing"
 
     print("=== Installing facer ===")
     install_facer(preprocessing_dir)
@@ -169,7 +168,7 @@ def main():
     install_pipnet(preprocessing_dir)
 
     print("\n=== Downloading pretrained weights ===")
-    download_pretrained_weights(repo_root)
+    download_pretrained_weights()
 
     print("\nAll done!")
 
