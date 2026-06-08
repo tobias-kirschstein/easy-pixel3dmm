@@ -1,9 +1,8 @@
-import os
-import wandb
-
 from omegaconf import OmegaConf
-from pixel3dmm.tracking.tracker import Tracker
+
 from pixel3dmm import env_paths
+from pixel3dmm.tracking.tracker import Tracker
+
 
 def main(cfg):
     tracker = Tracker(cfg)

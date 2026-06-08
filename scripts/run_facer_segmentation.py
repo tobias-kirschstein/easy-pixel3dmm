@@ -1,19 +1,14 @@
 import os
-import sys
 import traceback
-
 from math import ceil
 
-import PIL.Image
-import torch
 import distinctipy
-import matplotlib.pyplot as plt
-from PIL import Image
-import numpy as np
 import facer
+import matplotlib.pyplot as plt
+import numpy as np
+import torch
 import tyro
-
-from pixel3dmm import env_paths
+from PIL import Image
 
 colors = distinctipy.get_colors(22, rng=0)
 
@@ -134,10 +129,10 @@ face_detector = facer.face_detector('retinaface/mobilenet', device=device)
 face_parser = facer.face_parser('farl/celebm/448', device=device)  # optional "farl/lapa/448"
 
 
-def main(video_name : str):
+def main(preprocessing_folder: str, video_name : str, /):
 
 
-    out = f'{env_paths.PREPROCESSED_DATA}/{video_name}'
+    out = f'{preprocessing_folder}/{video_name}'
     out_seg = f'{out}/seg_og/'
     out_seg_annot = f'{out}/seg_non_crop_annotations/'
     os.makedirs(out_seg, exist_ok=True)

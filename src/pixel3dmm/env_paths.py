@@ -2,6 +2,7 @@ import json
 from pathlib import Path
 from environs import Env
 
+REPO_ROOT = f"{Path(__file__).parent.resolve()}/../.."
 
 env = Env(expand_vars=True)
 env_file_path = Path(f"{Path.home()}/.config/pixel3dmm/.env")
@@ -10,9 +11,9 @@ if env_file_path.exists():
 
 
 with env.prefixed("PIXEL3DMM_"):
-    CODE_BASE = env("CODE_BASE")
-    PREPROCESSED_DATA = env("PREPROCESSED_DATA")
-    TRACKING_OUTPUT = env("TRACKING_OUTPUT")
+    CODE_BASE = env("CODE_BASE", REPO_ROOT)
+    # PREPROCESSED_DATA = env("PREPROCESSED_DATA")
+    # TRACKING_OUTPUT = env("TRACKING_OUTPUT")
 
 
 

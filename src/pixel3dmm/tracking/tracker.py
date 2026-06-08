@@ -5,7 +5,7 @@ from PIL import Image, ImageDraw
 import os.path
 from enum import Enum
 from pathlib import Path
-import wandb
+# import wandb
 import time
 
 import cv2
@@ -140,13 +140,17 @@ def try_execute(fn, start_value: int, retries: int = 10):
 
 
 class Tracker(object):
-    def __init__(self, config,
+    def __init__(self,
+                 preprocessing_folder: str,
+                 tracking_folder: str,
+                 config,
                  device='cuda:0',
                  ):
         self.config = config
         self.device = device
         self.actor_name = self.config.video_name
-        DATA_FOLDER = f'{env_paths.PREPROCESSED_DATA}/{self.actor_name}'
+        self.preprocessing_folder = preprocessing_folder
+        DATA_FOLDER = f'{preprocessing_folder}/{self.actor_name}'
         self.MAX_STEPS = min(len([f for f in os.listdir(f'{DATA_FOLDER}/cropped/') if f.endswith('.jpg') or f.endswith('.png')]) - self.config.start_frame, 1000)
         self.FRAME_SKIP = 1
         self.BATCH_SIZE = min(self.config.batch_size, self.MAX_STEPS)
@@ -204,7 +208,7 @@ class Tracker(object):
         if hasattr(self.config, 'output_folder'):
             self.save_folder = self.config.output_folder
         else:
-            self.save_folder = env_paths.TRACKING_OUTPUT
+            self.save_folder = tracking_folder
         self.output_folder = os.path.join(self.save_folder, self.actor_name)
         self.checkpoint_folder = os.path.join(self.save_folder, self.actor_name, "checkpoint")
         self.mesh_folder = os.path.join(self.save_folder, self.actor_name, "mesh")
@@ -1509,8 +1513,8 @@ class Tracker(object):
 
 
     def read_data(self, timestep):
-        DATA_FOLDER = f'{env_paths.PREPROCESSED_DATA}/{self.config.video_name}'
-        P3DMM_FOLDER = f'{env_paths.PREPROCESSED_DATA}/{self.config.video_name}/p3dmm/'
+        DATA_FOLDER = f'{self.preprocessing_folder}/{self.config.video_name}'
+        P3DMM_FOLDER = f'{self.preprocessing_folder}/{self.config.video_name}/p3dmm/'
 
         try:
             rgb = np.array(Image.open(f'{DATA_FOLDER}/cropped/{timestep:05d}.jpg').resize((self.config.size, self.config.size))) / 255
@@ -1778,16 +1782,16 @@ class Tracker(object):
 
         # Optionally delete all preoprocessing artifacts, once tracking is done (only keep cropped images)
         if self.config.delete_preprocessing:
-            shutil.rmtree(f'{env_paths.PREPROCESSED_DATA}/{self.config.video_name}/mica')
-            shutil.rmtree(f'{env_paths.PREPROCESSED_DATA}/{self.config.video_name}/p3dmm')
-            shutil.rmtree(f'{env_paths.PREPROCESSED_DATA}/{self.config.video_name}/p3dmm_wGT')
-            shutil.rmtree(f'{env_paths.PREPROCESSED_DATA}/{self.config.video_name}/p3dmm_extraViz')
-            shutil.rmtree(f'{env_paths.PREPROCESSED_DATA}/{self.config.video_name}/pipnet')
-            shutil.rmtree(f'{env_paths.PREPROCESSED_DATA}/{self.config.video_name}/PIPnet_annotated_images')
-            shutil.rmtree(f'{env_paths.PREPROCESSED_DATA}/{self.config.video_name}/PIPnet_landmarks')
-            shutil.rmtree(f'{env_paths.PREPROCESSED_DATA}/{self.config.video_name}/rgb')
-            shutil.rmtree(f'{env_paths.PREPROCESSED_DATA}/{self.config.video_name}/seg_non_crop_annotations')
-            shutil.rmtree(f'{env_paths.PREPROCESSED_DATA}/{self.config.video_name}/seg_og')
+            shutil.rmtree(f'{self.preprocessing_folder}/{self.config.video_name}/mica')
+            shutil.rmtree(f'{self.preprocessing_folder}/{self.config.video_name}/p3dmm')
+            shutil.rmtree(f'{self.preprocessing_folder}/{self.config.video_name}/p3dmm_wGT')
+            shutil.rmtree(f'{self.preprocessing_folder}/{self.config.video_name}/p3dmm_extraViz')
+            shutil.rmtree(f'{self.preprocessing_folder}/{self.config.video_name}/pipnet')
+            shutil.rmtree(f'{self.preprocessing_folder}/{self.config.video_name}/PIPnet_annotated_images')
+            shutil.rmtree(f'{self.preprocessing_folder}/{self.config.video_name}/PIPnet_landmarks')
+            shutil.rmtree(f'{self.preprocessing_folder}/{self.config.video_name}/rgb')
+            shutil.rmtree(f'{self.preprocessing_folder}/{self.config.video_name}/seg_non_crop_annotations')
+            shutil.rmtree(f'{self.preprocessing_folder}/{self.config.video_name}/seg_og')
 
 
         print(f'''

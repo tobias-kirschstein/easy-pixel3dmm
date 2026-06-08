@@ -41,7 +41,7 @@ def gkern(kernlen=256, std=128):
 
 valid_verts = np.load(f'{env_paths.VALID_VERTICES_WIDE_REGION}')
 
-def main(cfg):
+def main(preprocessing_folder: str, cfg):
 
     if cfg.model.prediction_type == 'flame_params':
         cfg.data.mirror_aug = False
@@ -80,7 +80,7 @@ def main(cfg):
             ''')
 
     for OUT_NAME in OUT_NAMES:
-        folder = f'{env_paths.PREPROCESSED_DATA}/{OUT_NAME}/'
+        folder = f'{preprocessing_folder}/{OUT_NAME}/'
         IMAGE_FOLDER = f'{folder}/cropped'
         SEGEMNTATION_FOLDER = f'{folder}/seg_og/'
 
@@ -89,11 +89,11 @@ def main(cfg):
         out_folders_viz = {}
 
         for prediction_type in prediction_types:
-            out_folders[prediction_type] = f'{env_paths.PREPROCESSED_DATA}/{OUT_NAME}/p3dmm/{prediction_type}/'
-            out_folders_wGT[prediction_type] = f'{env_paths.PREPROCESSED_DATA}/{OUT_NAME}/p3dmm_wGT/{prediction_type}/'
+            out_folders[prediction_type] = f'{preprocessing_folder}/{OUT_NAME}/p3dmm/{prediction_type}/'
+            out_folders_wGT[prediction_type] = f'{preprocessing_folder}/{OUT_NAME}/p3dmm_wGT/{prediction_type}/'
             os.makedirs(out_folders[prediction_type], exist_ok=True)
             os.makedirs(out_folders_wGT[prediction_type], exist_ok=True)
-            out_folders_viz[prediction_type] = f'{env_paths.PREPROCESSED_DATA}/{OUT_NAME}/p3dmm_extraViz/{prediction_type}/'
+            out_folders_viz[prediction_type] = f'{preprocessing_folder}/{OUT_NAME}/p3dmm_extraViz/{prediction_type}/'
             os.makedirs(out_folders_viz[prediction_type], exist_ok=True)
 
 
@@ -105,7 +105,7 @@ def main(cfg):
                 return
 
         if model is None:
-            model = p3dmm_system.load_from_checkpoint(model_checkpoint, strict=False)
+            model = p3dmm_system.load_from_checkpoint(model_checkpoint, strict=False, weights_only=False)
             # TODO: disable randomness, dropout, etc...
             # model.eval()
             model = model.cuda()

@@ -1,16 +1,16 @@
-import traceback
+import importlib
 import os
 import sys
-import importlib
+from pathlib import Path
+from typing import Optional
 
 import mediapy
-from PIL import Image
-import tyro
-
 import torchvision.transforms as transforms
-
+import tyro
+from PIL import Image
 
 from pixel3dmm import env_paths
+
 sys.path.append(f'{env_paths.CODE_BASE}/src/pixel3dmm/preprocessing/PIPNet/FaceBoxesV2/')
 from pixel3dmm.preprocessing.pipnet_utils import demo_image
 from pixel3dmm import env_paths
@@ -80,19 +80,28 @@ def unpack_images(base_path, video_or_images_path):
             Image.fromarray(frame).save(f'{base_path}/{i:05d}.jpg', quality=95)
 
 def main(video_or_images_path : str,
-         max_bbox : bool = True, # not used
+         preprocessing_folder: str,
+         /,
+         video_name: Optional[str] = None,
+         max_bbox : bool = True,  # not used
          disable_cropping : bool = False):
-    if os.path.isdir(video_or_images_path):
-        video_name = video_or_images_path.split('/')[-1]
-    else:
-        video_name = video_or_images_path.split('/')[-1][:-4]
+    if video_name is None:
+        video_name = Path(video_or_images_path).stem
+    # if os.path.isdir(video_or_images_path):
+    #
+    # else:
+    #     video_name = video_or_images_path.split('/')[-1][:-4]
 
-    base_path = f'{env_paths.PREPROCESSED_DATA}/{video_name}/rgb/'
+    base_path = f'{preprocessing_folder}/{video_name}/rgb/'
 
     unpack_images(base_path, video_or_images_path)
 
-    if os.path.exists(f'{env_paths.PREPROCESSED_DATA}/{video_name}/cropped/'):
-        if len(os.listdir(base_path)) == len(os.listdir(f'{env_paths.PREPROCESSED_DATA}/{video_name}/cropped/')):
+    if os.path.exists(f'{preprocessing_folder}/{video_name}/cropped/'):
+        if len(os.listdir(base_path)) == len(os.listdir(f'{preprocessing_folder}/{video_name}/cropped/')):
+            if f'{env_paths.CODE_BASE}/src/pixel3dmm/preprocessing/PIPNet/FaceBoxesV2/' in sys.path:
+                sys.path.remove(f'{env_paths.CODE_BASE}/src/pixel3dmm/preprocessing/PIPNet/FaceBoxesV2/')
+            if 'utils' in sys.modules:
+                del sys.modules['utils']
             return
 
 
@@ -100,6 +109,10 @@ def main(video_or_images_path : str,
     run('experiments/WFLW/pip_32_16_60_r18_l2_l1_10_1_nb10.py', base_path, start_frame=start_frame, vertical_crop=False,
         static_crop=True, max_bbox=max_bbox, disable_cropping=disable_cropping)
     # run('experiments/WFLW/pip_32_16_60_r101_l2_l1_10_1_nb10.py', base_path, start_frame=start_frame, vertical_crop=False, static_crop=True)
+    if f'{env_paths.CODE_BASE}/src/pixel3dmm/preprocessing/PIPNet/FaceBoxesV2/' in sys.path:
+        sys.path.remove(f'{env_paths.CODE_BASE}/src/pixel3dmm/preprocessing/PIPNet/FaceBoxesV2/')
+    if 'utils' in sys.modules:
+        del sys.modules['utils']
 
 
 if __name__ == '__main__':
