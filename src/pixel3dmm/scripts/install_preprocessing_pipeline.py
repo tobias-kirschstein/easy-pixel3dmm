@@ -40,7 +40,7 @@ def install_facer(preprocessing_dir):
 def install_mica(preprocessing_dir):
     mica_dir = preprocessing_dir / "MICA"
     if not mica_dir.exists():
-        run("git clone git@github.com:Zielon/MICA.git", cwd=preprocessing_dir)
+        run("git -c core.autocrlf=false clone git@github.com:Zielon/MICA.git", cwd=preprocessing_dir)
 
     replacement = preprocessing_dir / "replacement_code"
     shutil.copy(replacement / "mica_demo.py", mica_dir / "demo.py")

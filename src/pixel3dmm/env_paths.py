@@ -11,10 +11,10 @@ if env_file_path.exists():
     env.read_env(str(env_file_path), recurse=False)
 
 
-with env.prefixed("PIXEL3DMM_"):
-    CODE_BASE = env("CODE_BASE", REPO_ROOT)
-    # PREPROCESSED_DATA = env("PREPROCESSED_DATA")
-    # TRACKING_OUTPUT = env("TRACKING_OUTPUT")
+# with env.prefixed("PIXEL3DMM_"):
+#     CODE_BASE = env("CODE_BASE", REPO_ROOT)
+#     # PREPROCESSED_DATA = env("PREPROCESSED_DATA")
+#     # TRACKING_OUTPUT = env("TRACKING_OUTPUT")
 
 
 
