@@ -1,3 +1,47 @@
+This repository aims at simplifying the installation of `Pixel3DMM` to ensure easy tracking of portrait videos.
+
+# 1. Setup
+
+## 1.1. Prerequesites
+Ensure you have an environment setup with CUDA 11.8 and pytorch 2.7.1 installed. E.g., via  
+```shell
+pip install torch==2.7.1 torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+conda install nvidia/label/cuda-11.8.0::cuda-nvcc nvidia/label/cuda-11.8.0::cuda-cccl nvidia/label/cuda-11.8.0::cuda-cudart nvidia/label/cuda-11.8.0::cuda-cudart-dev nvidia/label/cuda-11.8.0::libcusparse nvidia/label/cuda-11.8.0::libcusparse-dev nvidia/label/cuda-11.8.0::libcublas nvidia/label/cuda-11.8.0::libcublas-dev nvidia/label/cuda-11.8.0::libcurand nvidia/label/cuda-11.8.0::libcurand-dev nvidia/label/cuda-11.8.0::libcusolver nvidia/label/cuda-11.8.0::libcusolver-dev
+```
+If you use different CUDA/PyTorch versions, please adjust the installation of `pytorch3d` accordingly in the next step (pytorch3d==0.7.9+pt2.7.1cu118) 
+
+## 1.2. Pixel3DMM Setup
+
+1. Install the repository and crucial dependencies via
+    ```shell
+    pip install git+https://github.com/tobias-kirschstein/easy-pixel3dmm.git
+    pip install --extra-index-url https://miropsota.github.io/torch_packages_builder pytorch3d==0.7.9+pt2.7.1cu118
+    pip install --no-build-isolation git+https://github.com/NVlabs/nvdiffrast.git
+    ```
+2. Once all dependencies for `Pixel3DMM` are installed, you need to run the setup script
+    ```shell
+    python -m pixel3dmm.scripts.install_preprocessing_pipeline
+    ```
+3. You can now track videos via 
+   ```shell
+   python scripts/run_pixel3dmm.py ${video_path} ${output_processing_folder} ${output_tracking_folder}
+   ```
+   You can freely choose `${output_processing_folder}` and `${output_tracking_folder}`. The `${output_processing_folder}` will contain cropped images, segmentation masks, and UV & normal predictions. The `${output_tracking_folder}` will contain the final FLAME tracking.   
+
+Instead of running `Pixel3DMM` from the command line, you can also integrate it into your own repository and call it from Python:
+```python
+from pixel3dmm.scripts.run_pixel3dmm import main as run_pixel3dmm
+
+video_path = ...  # Path to the video you want to track
+output_processing_folder = ...  # Folder to hold processing outputs
+output_tracking_folder = ...  # Folder to hold final tracking output
+run_pixel3dmm(video_path, output_processing_folder, output_tracking_folder)
+```
+
+Original README below.
+
+<hr>
+
 #  Pixel3DMM: Versatile Screen-Space Priors for Single-Image 3D Face Reconstruction
 [**Paper**](https://arxiv.org/abs/2505.00615) | [**Video**](https://www.youtube.com/watch?v=BwxwEXJwUDc) | [**Project Page**](https://simongiebenhain.github.io/pixel3dmm/) <br>
 
