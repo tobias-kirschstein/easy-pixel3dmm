@@ -91,6 +91,8 @@ def main(video_path: str, preprocessing_folder: str, tracking_folder: str, /, cl
             rmtree(f"{processing_folder}/p3dmm_extraViz")
         if Path(f"{processing_folder}/p3dmm/uv_map").is_dir():
             rmtree(f"{processing_folder}/p3dmm/uv_map")
+        if Path(f"{processing_folder}/p3dmm/normals").is_dir():
+            rmtree(f"{processing_folder}/p3dmm/normals")
         if Path(f"{processing_folder}/pipnet").is_dir():
             rmtree(f"{processing_folder}/pipnet")
         if Path(f"{processing_folder}/PIPnet_annotated_images").is_dir():

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "easy_pixel3dmm"
-version = "0.0.1"
+version = "0.0.2"
 description = "<<<ENTER_DESCRIPTION>>>"
 authors = [
     { name = "Simon Giebenhain", email = "simon.giebenhain@tum.de" },
